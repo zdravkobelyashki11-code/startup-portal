@@ -1,0 +1,18 @@
+{
+    "name": "startup-weekend-ai-mentor",
+    "version": "1.0.0",
+    "description": "AI Mentor Portal for StartUP Weekend 2025 at AUBG",
+    "type": "module",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "node server.js"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2",
+        "multer": "^1.4.5-lts.1",
+        "openai": "^4.85.0"
+    }
+}

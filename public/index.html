@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartUP Weekend 2025 — AI Mentor</title>
+    <meta name="description"
+        content="AI-powered coaching portal for StartUP Weekend 2025 at the American University in Bulgaria.">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --indigo: #6366f1;
+            --indigo-light: #818cf8;
+            --indigo-dark: #4f46e5;
+            --indigo-dim: rgba(99, 102, 241, 0.12);
+            --indigo-glow: rgba(99, 102, 241, 0.35);
+            --bg-primary: #0c0e1a;
+            --bg-secondary: #12152a;
+            --bg-card: rgba(22, 26, 48, 0.7);
+            --bg-glass: rgba(22, 26, 48, 0.5);
+            --bg-input: rgba(30, 34, 60, 0.8);
+            --text-primary: #e8eaf6;
+            --text-secondary: #9da4c0;
+            --text-muted: #636985;
+            --border: rgba(99, 102, 241, 0.12);
+            --border-active: rgba(99, 102, 241, 0.4);
+            --gradient-brand: linear-gradient(135deg, #f97316, #ec4899, #8b5cf6, #6366f1);
+            --gradient-indigo: linear-gradient(135deg, #6366f1, #818cf8);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-full: 999px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.03) 0%, transparent 40%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ===== LANDING ===== */
+        #landing {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-primary);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        #landing.hidden {
+            opacity: 0;
+            transform: scale(1.05);
+            pointer-events: none;
+        }
+
+        .landing-bg {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 30%, rgba(99, 102, 241, 0.1) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 70%, rgba(236, 72, 153, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 60%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
+        }
+
+        .landing-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 520px;
+            padding: 20px;
+            animation: fadeUp 0.8s ease;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .landing-logo {
+            width: 200px;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.3));
+        }
+
+        .landing-title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 4px;
+        }
+
+        .landing-title span {
+            background: var(--gradient-brand);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .landing-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 36px;
+        }
+
+        .landing-form {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color var(--transition), box-shadow var(--transition);
+            margin-bottom: 20px;
+        }
+
+        .form-input:focus {
+            border-color: var(--indigo);
+            box-shadow: 0 0 0 3px var(--indigo-dim);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            background: var(--gradient-indigo);
+            border: none;
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform var(--transition), box-shadow var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+        }
+
+        .server-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .server-status.ok {
+            background: rgba(16, 185, 129, 0.1);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .server-status.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .server-status .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .server-status.ok .dot {
+            background: #34d399;
+        }
+
+        .server-status.error .dot {
+            background: #f87171;
+        }
+
+        /* ===== APP LAYOUT ===== */
+        #app {
+            display: none;
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        #app.active {
+            display: flex;
+        }
+
+        /* ===== TOP BAR ===== */
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            height: 64px;
+            background: rgba(12, 14, 26, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .topbar-logo {
+            height: 32px;
+        }
+
+        .topbar-divider {
+            width: 1px;
+            height: 24px;
+            background: var(--border);
+        }
+
+        .topbar-team {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .topbar-team strong {
+            color: var(--indigo-light);
+        }
+
+        .topbar-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--bg-glass);
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition);
+        }
+
+        .btn-icon:hover {
+            border-color: var(--indigo);
+            color: var(--indigo-light);
+            background: var(--indigo-dim);
+        }
+
+        .btn-icon.active {
+            border-color: var(--indigo);
+            color: var(--indigo-light);
+            background: var(--indigo-dim);
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            position: fixed;
+            top: 64px;
+            right: 0;
+            bottom: 0;
+            width: 380px;
+            background: rgba(12, 14, 26, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-left: 1px solid var(--border);
+            padding: 24px;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform var(--transition);
+            z-index: 40;
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
+        }
+
+        .sidebar-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+
+        .criteria-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 18px;
+            margin-bottom: 14px;
+        }
+
+        .criteria-header {
+            font-size: 0.92rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .criteria-badge {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .criteria-list {
+            list-style: none;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+
+        .criteria-list li {
+            padding: 4px 0 4px 18px;
+            position: relative;
+        }
+
+        .criteria-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        .schedule-item {
+            display: flex;
+            gap: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.82rem;
+        }
+
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+
+        .schedule-time {
+            color: var(--indigo-light);
+            font-weight: 700;
+            min-width: 50px;
+            white-space: nowrap;
+        }
+
+        .schedule-event {
+            color: var(--text-secondary);
+        }
+
+        .schedule-day {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 16px 0 6px;
+            padding: 6px 12px;
+            background: var(--indigo-dim);
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .schedule-day:first-child {
+            margin-top: 0;
+        }
+
+        /* ===== CHAT ===== */
+        .chat-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding-top: 64px;
+            max-width: 860px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 24px 0;
+            scroll-behavior: smooth;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 10px;
+        }
+
+        .message {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            animation: msgIn 0.4s ease;
+            max-width: 85%;
+        }
+
+        @keyframes msgIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            margin-left: auto;
+            flex-direction: row-reverse;
+        }
+
+        .msg-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .message.assistant .msg-avatar {
+            background: var(--indigo-dim);
+            color: var(--indigo-light);
+            border: 1px solid var(--border);
+        }
+
+        .message.user .msg-avatar {
+            background: rgba(16, 185, 129, 0.12);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .msg-content {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+        }
+
+        .message.user .msg-content {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: rgba(99, 102, 241, 0.2);
+        }
+
+        .msg-content p {
+            margin-bottom: 8px;
+        }
+
+        .msg-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .msg-content strong {
+            color: var(--indigo-light);
+        }
+
+        .msg-content ul,
+        .msg-content ol {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .msg-content li {
+            margin-bottom: 4px;
+        }
+
+        .msg-content code {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .msg-file-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--indigo-dim);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: var(--indigo-light);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .typing-indicator {
+            display: none;
+            gap: 12px;
+            margin-bottom: 20px;
+            max-width: 85%;
+        }
+
+        .typing-indicator.active {
+            display: flex;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 5px;
+            padding: 18px 22px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .typing-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--indigo);
+            animation: bounce 1.4s infinite;
+        }
+
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+
+            30% {
+                transform: translateY(-8px);
+                opacity: 1;
+            }
+        }
+
+        /* ===== SUGGESTIONS ===== */
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 12px 24px;
+        }
+
+        .suggestion-chip {
+            padding: 9px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-full);
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition);
+            white-space: nowrap;
+        }
+
+        .suggestion-chip:hover {
+            border-color: var(--indigo);
+            color: var(--indigo-light);
+            background: var(--indigo-dim);
+            transform: translateY(-1px);
+        }
+
+        /* ===== INPUT ===== */
+        .input-area {
+            padding: 16px 24px 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 6px;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--indigo);
+            box-shadow: 0 0 0 3px var(--indigo-dim);
+        }
+
+        #messageInput {
+            flex: 1;
+            padding: 12px 14px;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.92rem;
+            resize: none;
+            outline: none;
+            max-height: 120px;
+            line-height: 1.5;
+        }
+
+        #messageInput::placeholder {
+            color: var(--text-muted);
+        }
+
+        .input-actions {
+            display: flex;
+            gap: 4px;
+            padding-bottom: 4px;
+        }
+
+        .btn-input {
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius-sm);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: all var(--transition);
+        }
+
+        .btn-upload {
+            background: transparent;
+            color: var(--text-muted);
+        }
+
+        .btn-upload:hover {
+            color: var(--indigo-light);
+            background: var(--indigo-dim);
+        }
+
+        .btn-send {
+            background: var(--gradient-indigo);
+            color: #fff;
+        }
+
+        .btn-send:hover {
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-send:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .landing-title {
+                font-size: 1.8rem;
+            }
+
+            .landing-form {
+                padding: 24px;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .message {
+                max-width: 95%;
+            }
+
+            .suggestions {
+                padding: 10px 16px;
+            }
+
+            .chat-messages {
+                padding: 16px 16px 0;
+            }
+
+            .input-area {
+                padding: 12px 16px 16px;
+            }
+
+            .topbar {
+                padding: 0 16px;
+            }
+
+            .topbar-team {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .landing-logo {
+                width: 150px;
+            }
+
+            .landing-title {
+                font-size: 1.5rem;
+            }
+
+            .suggestion-chip {
+                font-size: 0.75rem;
+                padding: 7px 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== LANDING ===== -->
+    <div id="landing">
+        <div class="landing-bg"></div>
+        <div class="landing-content">
+            <img src="https://www.startupatblagoevgrad.org/assets/img/StartUPLogoFull.svg" alt="StartUP@Blagoevgrad"
+                class="landing-logo">
+            <h1 class="landing-title"><span>Weekend 2025</span></h1>
+            <p class="landing-subtitle">AI Mentor — your personal startup coach for the weekend</p>
+            <div class="landing-form">
+                <label class="form-label" for="teamName">Team Name</label>
+                <input class="form-input" type="text" id="teamName" placeholder="e.g. EcoTrack" autocomplete="off"
+                    required>
+                <label class="form-label" for="teamIdea">Your Startup Idea (one line)</label>
+                <input class="form-input" type="text" id="teamIdea"
+                    placeholder="e.g. An app that tracks personal carbon footprint" autocomplete="off">
+                <button class="btn-primary" id="startBtn" onclick="startChat()">🚀 Start Chat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN APP ===== -->
+    <div id="app">
+        <div class="topbar">
+            <div class="topbar-left">
+                <img src="https://www.startupatblagoevgrad.org/assets/img/StartUPLogoFull.svg" alt="StartUP"
+                    class="topbar-logo">
+                <div class="topbar-divider"></div>
+                <span class="topbar-team">Team: <strong id="topbarTeamName"></strong></span>
+            </div>
+            <div class="topbar-actions">
+                <button class="btn-icon" id="sidebarToggle" onclick="toggleSidebar()"
+                    title="Knowledge Panel">📋</button>
+            </div>
+        </div>
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-title">📊 Judging Criteria</div>
+            <div class="criteria-section">
+                <div class="criteria-header"><span class="criteria-badge" style="background:#f97316;"></span>Customer
+                    Validation</div>
+                <ul class="criteria-list">
+                    <li>Did the team talk to customers?</li>
+                    <li>Who are users vs. customers?</li>
+                    <li>How many interviews conducted?</li>
+                    <li>Did they target the right people?</li>
+                    <li>What did they learn?</li>
+                    <li>Core user needs identified?</li>
+                </ul>
+            </div>
+            <div class="criteria-section">
+                <div class="criteria-header"><span class="criteria-badge" style="background:#6366f1;"></span>Execution &
+                    Design</div>
+                <ul class="criteria-list">
+                    <li>Feedback that inspired the MVP?</li>
+                    <li>Did they build a prototype?</li>
+                    <li>How effective is the MVP?</li>
+                    <li>Technical demo functionality?</li>
+                    <li>Ease of user navigation?</li>
+                    <li>Customer feedback incorporated?</li>
+                </ul>
+            </div>
+            <div class="criteria-section">
+                <div class="criteria-header"><span class="criteria-badge" style="background:#ec4899;"></span>Business
+                    Model</div>
+                <ul class="criteria-list">
+                    <li>Unique idea?</li>
+                    <li>Key value proposition?</li>
+                    <li>Path to a successful business?</li>
+                    <li>Competition, scaling, revenue model?</li>
+                    <li>Specific target market?</li>
+                    <li>Plan for first 100 customers?</li>
+                </ul>
+            </div>
+            <div class="sidebar-title" style="margin-top:28px;">📅 Key Schedule</div>
+            <div class="criteria-section">
+                <div class="schedule-day">🗓 Friday, March 21</div>
+                <div class="schedule-item"><span class="schedule-time">6:30 PM</span><span
+                        class="schedule-event">Registration</span></div>
+                <div class="schedule-item"><span class="schedule-time">7:00 PM</span><span
+                        class="schedule-event">Opening Ceremony</span></div>
+                <div class="schedule-item"><span class="schedule-time">7:15 PM</span><span class="schedule-event">Mentor
+                        intros & Team pitches</span></div>
+                <div class="schedule-item"><span class="schedule-time">9:00 PM</span><span class="schedule-event">Begin
+                        work</span></div>
+                <div class="schedule-day">🗓 Saturday, March 22</div>
+                <div class="schedule-item"><span class="schedule-time">9:00 AM</span><span
+                        class="schedule-event">Breakfast</span></div>
+                <div class="schedule-item"><span class="schedule-time">10:30</span><span class="schedule-event">Appolica
+                        Mentorship Sessions</span></div>
+                <div class="schedule-item"><span class="schedule-time">12:30</span><span
+                        class="schedule-event">Lunch</span></div>
+                <div class="schedule-day">🗓 Sunday, March 23</div>
+                <div class="schedule-item"><span class="schedule-time">2:30 PM</span><span class="schedule-event">⚠️
+                        Presentation submission deadline</span></div>
+                <div class="schedule-item"><span class="schedule-time">3:00 PM</span><span class="schedule-event">Final
+                        presentations (7 min + 3 min Q&A)</span></div>
+                <div class="schedule-item"><span class="schedule-time">6:30 PM</span><span class="schedule-event">🏆
+                        Awards & Closing</span></div>
+            </div>
+        </aside>
+
+        <div class="chat-wrapper">
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="suggestions" id="suggestions">
+                <button class="suggestion-chip" onclick="sendSuggestion(this)">Tear apart our idea — be brutally
+                    honest</button>
+                <button class="suggestion-chip" onclick="sendSuggestion(this)">Who are our real competitors?</button>
+                <button class="suggestion-chip" onclick="sendSuggestion(this)">Help us structure our 7-min
+                    pitch</button>
+                <button class="suggestion-chip" onclick="sendSuggestion(this)">How do we interview customers
+                    properly?</button>
+                <button class="suggestion-chip" onclick="sendSuggestion(this)">What's our revenue model?</button>
+                <button class="suggestion-chip" onclick="sendSuggestion(this)">What will judges ask us?</button>
+            </div>
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <textarea id="messageInput" rows="1" placeholder="Ask your AI mentor anything..."
+                        onkeydown="handleKeyDown(event)" oninput="autoResize(this)"></textarea>
+                    <div class="input-actions">
+                        <button class="btn-input btn-upload" onclick="document.getElementById('fileInput').click()"
+                            title="Upload presentation slide (image)">📎</button>
+                        <button class="btn-input btn-send" id="sendBtn" onclick="sendMessage()" title="Send">➤</button>
+                    </div>
+                </div>
+                <input type="file" id="fileInput" accept=".png,.jpg,.jpeg,.webp,.gif"
+                    onchange="handleFileUpload(event)">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== STATE =====
+        let conversationHistory = []; // messages sent to the server (no system prompt — server adds it)
+        let teamName = '';
+        let teamIdea = '';
+
+        // ===== CHECK SERVER =====
+        async function checkServer() {
+            const el = document.getElementById('serverStatus');
+            const text = document.getElementById('serverStatusText');
+            try {
+                const res = await fetch('/api/health');
+                const data = await res.json();
+                if (data.status === 'ok' && data.hasApiKey) {
+                    el.className = 'server-status ok';
+                    text.textContent = `Connected — ${data.model}`;
+                } else if (data.status === 'ok' && !data.hasApiKey) {
+                    el.className = 'server-status error';
+                    text.textContent = 'Server running but API key missing — edit .env';
+                }
+            } catch {
+                el.className = 'server-status error';
+                text.textContent = 'Server not running — start with: npm start';
+            }
+        }
+        checkServer();
+
+        // ===== INIT =====
+        function startChat() {
+            teamName = document.getElementById('teamName').value.trim();
+            teamIdea = document.getElementById('teamIdea').value.trim();
+            if (!teamName) {
+                document.getElementById('teamName').style.borderColor = '#f87171';
+                document.getElementById('teamName').focus();
+                return;
+            }
+            document.getElementById('topbarTeamName').textContent = teamName;
+            document.getElementById('landing').classList.add('hidden');
+            document.getElementById('app').classList.add('active');
+
+            conversationHistory = [];
+
+            const greeting = teamIdea
+                ? `**${teamName}** — welcome. I'm your AI mentor for StartUP Weekend 2025.\n\nYour idea: *"${teamIdea}"*\n\nI'm not here to tell you your idea is great — I'm here to make sure it **survives contact with the judges.** I know every criterion they'll score you on, every question they'll ask, and every mistake teams make.\n\n**What I can do:**\n- 🎯 **Evaluate your idea** against all 3 judging criteria (honestly)\n- 🏁 **Analyze your competition** — the threats you don't know about\n- 🎤 **Structure your 7-minute pitch** for maximum impact\n- 🎙️ **Build your customer interview guide** so you get real data\n- 💰 **Stress-test your revenue model** before judges do\n- 📊 **Critique your slides** — upload them and I'll tell you what's wrong\n\nLet's start. What do you want to work on?`
+                : `**${teamName}** — welcome. I'm your AI mentor for StartUP Weekend 2025.\n\nI'm not here to tell you your idea is great. I'm here to make sure it **survives the judges.** I've seen thousands of pitches — I know what wins and what fails.\n\nSo — what's your startup idea? Give me the one-liner and I'll give you my honest take.`;
+
+            addMessage('assistant', greeting);
+            conversationHistory.push({ role: 'assistant', content: greeting });
+        }
+
+        // ===== CHAT =====
+        function addMessage(role, content, fileName) {
+            const container = document.getElementById('chatMessages');
+            const msg = document.createElement('div');
+            msg.className = `message ${role}`;
+            const avatarText = role === 'assistant' ? '🤖' : teamName.charAt(0).toUpperCase();
+            let fileHtml = fileName ? `<div class="msg-file-badge">📎 ${fileName}</div>` : '';
+            msg.innerHTML = `
+        <div class="msg-avatar">${avatarText}</div>
+        <div class="msg-content">${fileHtml}${formatMarkdown(content)}</div>
+    `;
+            container.appendChild(msg);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function formatMarkdown(text) {
+            let html = text
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                .replace(/`(.+?)`/g, '<code>$1</code>')
+                .replace(/^### (.+)$/gm, '<h4>$1</h4>')
+                .replace(/^## (.+)$/gm, '<h3>$1</h3>')
+                .replace(/^# (.+)$/gm, '<h2>$1</h2>');
+            const lines = html.split('\n');
+            let result = '', inList = false, listType = '';
+            for (let line of lines) {
+                const bullet = line.match(/^[\s]*[-•→] (.+)/);
+                const numbered = line.match(/^[\s]*(\d+)[.)]\s(.+)/);
+                if (bullet) {
+                    if (!inList || listType !== 'ul') { if (inList) result += `</${listType}>`; result += '<ul>'; inList = true; listType = 'ul'; }
+                    result += `<li>${bullet[1]}</li>`;
+                } else if (numbered) {
+                    if (!inList || listType !== 'ol') { if (inList) result += `</${listType}>`; result += '<ol>'; inList = true; listType = 'ol'; }
+                    result += `<li>${numbered[2]}</li>`;
+                } else {
+                    if (inList) { result += `</${listType}>`; inList = false; }
+                    if (line.trim()) result += line.startsWith('<h') ? line : `<p>${line}</p>`;
+                }
+            }
+            if (inList) result += `</${listType}>`;
+            return result;
+        }
+
+        function showTyping() {
+            const container = document.getElementById('chatMessages');
+            let indicator = document.getElementById('typingIndicator');
+            if (!indicator) {
+                indicator = document.createElement('div');
+                indicator.id = 'typingIndicator';
+                indicator.className = 'typing-indicator';
+                indicator.innerHTML = `<div class="msg-avatar" style="background:var(--indigo-dim);color:var(--indigo-light);border:1px solid var(--border);">🤖</div><div class="typing-dots"><span></span><span></span><span></span></div>`;
+                container.appendChild(indicator);
+            }
+            indicator.classList.add('active');
+            container.scrollTop = container.scrollHeight;
+        }
+        function hideTyping() { const i = document.getElementById('typingIndicator'); if (i) i.classList.remove('active'); }
+
+        async function sendMessage(overrideText) {
+            const input = document.getElementById('messageInput');
+            const text = overrideText || input.value.trim();
+            if (!text) return;
+
+            addMessage('user', text);
+            input.value = '';
+            autoResize(input);
+            document.getElementById('suggestions').style.display = 'none';
+
+            conversationHistory.push({ role: 'user', content: text });
+            showTyping();
+            document.getElementById('sendBtn').disabled = true;
+
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ messages: conversationHistory, teamName, teamIdea })
+                });
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    throw new Error(err.error || `Server error: ${res.status}`);
+                }
+                const data = await res.json();
+                hideTyping();
+                addMessage('assistant', data.reply);
+                conversationHistory.push({ role: 'assistant', content: data.reply });
+            } catch (error) {
+                hideTyping();
+                addMessage('assistant', `⚠️ **Error:** ${error.message}`);
+            }
+            document.getElementById('sendBtn').disabled = false;
+            input.focus();
+        }
+
+        function sendSuggestion(btn) {
+            document.getElementById('messageInput').value = btn.textContent;
+            sendMessage(btn.textContent);
+        }
+
+        function handleKeyDown(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
+        function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 120) + 'px'; }
+
+        // ===== IMAGE UPLOAD =====
+        async function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            event.target.value = '';
+
+            if (file.size > 20 * 1024 * 1024) {
+                addMessage('assistant', '⚠️ File is too large (max 20MB). Please upload a smaller image.');
+                return;
+            }
+
+            addMessage('user', `📎 Uploaded: ${file.name}`, file.name);
+            document.getElementById('suggestions').style.display = 'none';
+            showTyping();
+            document.getElementById('sendBtn').disabled = true;
+
+            try {
+                const formData = new FormData();
+                formData.append('image', file);
+                formData.append('messages', JSON.stringify(conversationHistory));
+                formData.append('teamName', teamName);
+                formData.append('teamIdea', teamIdea);
+
+                const res = await fetch('/api/chat/image', { method: 'POST', body: formData });
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    throw new Error(err.error || `Server error: ${res.status}`);
+                }
+                const data = await res.json();
+                hideTyping();
+                addMessage('assistant', data.reply);
+                conversationHistory.push(
+                    { role: 'user', content: `[Uploaded image: ${file.name} for evaluation]` },
+                    { role: 'assistant', content: data.reply }
+                );
+            } catch (error) {
+                hideTyping();
+                addMessage('assistant', `⚠️ **Error:** ${error.message}`);
+            }
+            document.getElementById('sendBtn').disabled = false;
+        }
+
+        // ===== SIDEBAR =====
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarToggle').classList.toggle('active');
+        }
+
+        // ===== LANDING ENTER =====
+        document.getElementById('teamName').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); document.getElementById('teamIdea').focus(); } });
+        document.getElementById('teamIdea').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); startChat(); } });
+    </script>
+</body>
+
+</html>
