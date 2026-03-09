@@ -29,12 +29,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const MODEL = process.env.OPENAI_MODEL || 'gpt-5.2';
 const SESSION_TTL_DAYS = 14;
 const COMPACTION_THRESHOLD = 100000;
 const RETAIN_RECENT_MESSAGES = 12;
 const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
+let openaiClient;
 const upload = multer({
     storage: multer.memoryStorage(),
     limits: { fileSize: MAX_IMAGE_BYTES }
@@ -105,6 +105,18 @@ function mapOpenAIError(error) {
     }
 
     return new AppError(502, 'The AI service is temporarily unavailable');
+}
+
+function getOpenAIClient() {
+    if (!process.env.OPENAI_API_KEY) {
+        throw new AppError(500, 'OPENAI_API_KEY is not configured', { expose: false });
+    }
+
+    if (!openaiClient) {
+        openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    }
+
+    return openaiClient;
 }
 
 function extractAssistantText(messageContent) {
@@ -331,7 +343,7 @@ async function compactThreadIfNeeded(threadId, team, promptTokens) {
         return;
     }
 
-    const completion = await openai.chat.completions.create({
+    const completion = await getOpenAIClient().chat.completions.create({
         model: MODEL,
         messages: [
             {
@@ -342,7 +354,6 @@ async function compactThreadIfNeeded(threadId, team, promptTokens) {
         max_completion_tokens: 1200,
         temperature: 0.2
     });
-
     const summary = extractAssistantText(completion.choices[0]?.message?.content);
     if (!summary) {
         throw new AppError(502, 'Compaction returned an empty summary');
@@ -369,14 +380,11 @@ async function compactThreadIfNeeded(threadId, team, promptTokens) {
 }
 
 async function createChatCompletion(team, threadId, currentMessages, latestMessage) {
-    if (!process.env.OPENAI_API_KEY) {
-        throw new AppError(500, 'OPENAI_API_KEY is not configured', { expose: false });
-    }
-
+    const client = getOpenAIClient();
     const threadState = await query('SELECT summary_md FROM threads WHERE id = $1', [threadId]);
     const summaryMd = threadState.rows[0]?.summary_md || '';
 
-    const completion = await openai.chat.completions.create({
+    const completion = await client.chat.completions.create({
         model: MODEL,
         messages: [
             {
